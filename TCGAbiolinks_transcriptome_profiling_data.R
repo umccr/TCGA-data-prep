@@ -301,7 +301,7 @@ if ( workflowType == "HTSeq - Counts" ) {
     ##### Box plot of read count data per sample
     pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
     par(mar=c(16,5,2,1))
-    boxplot( data_matrix,col="grey", las = 2, main = paste(ProjectName, " data", sep="") )
+    boxplot( data_matrix, col="grey", las = 2, main = paste(ProjectName, " data", sep="") )
     dev.off()
 
 } else if ( workflowType == "HTSeq - FPKM" ) {
@@ -352,7 +352,7 @@ write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep="") ,se
 #===============================================================================
 
 ##### Query clinical data
-query <- GDCquery( project = ProjectID, data.category = "Clinical" )
+query <- GDCquery( project = ProjectID, data.category = "Clinical", file.type = "xml" )
 
 ##### Download queried data. Use “client” method. Although the default "api" method is faster, but the data might get corrupted in the download, and it might need to be executed again. One can also set the "chunks.per.download" parameter. This will make the API method only download n files at a time. This may reduce the download problems when the data size is too large.
 GDCdownload(query, method = "client")
@@ -361,7 +361,6 @@ GDCdownload(query, method = "client")
 #===============================================================================
 #    Data prepare associated clinical information
 #===============================================================================
-
 
 clinical.patient <- GDCprepare_clinic(query, clinical.info = "patient")
 rownames(clinical.patient) <- clinical.patient$bcr_patient_barcode
