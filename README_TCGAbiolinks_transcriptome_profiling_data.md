@@ -1,6 +1,6 @@
 # Processing harmonized transcriptome profiling data
 
-Pipeline for downloading HARMONIZED transcriptome profiling data from [TCGA](https://cancergenome.nih.gov) and [TARGET](https://ocg.cancer.gov/programs/target/research) projects using *[TCGAbiolinks](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html)* R package. The script outputs normalised expression (FPKM or FPKM-UQ) or raw count matrix for RNA-seq data for user-defined tissue types along with associated clinical information.
+Pipeline for downloading HARMONIZED transcriptome profiling data from [TCGA](https://cancergenome.nih.gov) and [TARGET](https://ocg.cancer.gov/programs/target/research) projects using *[TCGAbiolinks](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html)* R package. It uses the [GDC Data Transfer Tool Client](https://gdc.cancer.gov/access-data/gdc-data-transfer-tool) to download the data from the [Genomic Data Commons](https://gdc.cancer.gov/about-gdc) (GDC) portal. The script outputs normalised expression (FPKM or FPKM-UQ) or raw count matrix for RNA-seq data for user-defined tissue types along with associated clinical information.
 
 The TCGA genomic data harmonization is [here](https://gdc.cancer.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization-0#Overview) and the mRNA analysis pipeline is described [here](https://gdc-docs.nci.nih.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline).
 <br />
@@ -102,6 +102,8 @@ Clinical_Supplement | Folder with 'xml' files including clinical information for
 ### --out_dir
 
 Local workspace. This is the directory to which the data will be downloaded and stored.
+
+<br />
 
 ### --project_id
 
