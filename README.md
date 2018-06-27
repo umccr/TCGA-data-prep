@@ -1,14 +1,12 @@
-# TCGA data download and analyses
+# TCGA data preparation for analyses
 
-Pipelines for downloading and preparing different types of [TCGA](https://cancergenome.nih.gov) and [TARGET](https://ocg.cancer.gov/programs/target/research) data for analyses using the *[TCGAbiolinks](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html)* R package.
+Pipelines for downloading and preparing different types of [TCGA](https://cancergenome.nih.gov) and [TARGET](https://ocg.cancer.gov/programs/target/research) data for analyses using the *[TCGAbiolinks](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html)* R package:
 
-See individual *README.md* files for more details about corresponding pipelines:
+- [TCGAbiolinks_transcriptome_profiling_data](TCGAbiolinks_transcriptome_profiling_data.md)
+pipeline for processing HARMONIZED transcriptome profiling data
 
-- [README_TCGAbiolinks_transcriptome_profiling_data](README_TCGAbiolinks_transcriptome_profiling_data.md)
-for processing HARMONIZED transcriptome profiling data
+- [TCGAbiolinks_gene_expression_data](TCGAbiolinks_gene_expression_data.md)
+pipeline for processing LEGACY gene expression data
 
-- [README_TCGAbiolinks_gene_expression_data](README_TCGAbiolinks_gene_expression_data.md)
-for processing LEGACY gene expression data
-
-- [README_TCGAbiolinks_DNA_methylation_data](README_TCGAbiolinks_DNA_methylation_data.md)
-for processing HARMONIZED DNA methylation data
+- [TCGAbiolinks_DNA_methylation_data](TCGAbiolinks_DNA_methylation_data.md)
+pipeline for processing HARMONIZED DNA methylation data
