@@ -41,7 +41,7 @@ Use the [TCGAbiolinks_transcriptome_profiling_data.R](https://github.com/umccr/T
 ### Command line
 
 ```
-Rscript TCGAbiolinks_transcriptome_profiling_data.R --out_dir TCGA/PAAD --project_id TCGA-PAAD --tissue 1,11 --workflow FPKM-UQ
+Rscript TCGAbiolinks_transcriptome_profiling_data.R --out_dir TCGA/PAAD --project_id TCGA-PAAD --tissue 1,11 --workflow Counts
 ```
 
 <br />
@@ -55,11 +55,11 @@ TCGA
   |
   |____transcriptome_profiling
     |
-    |____FPKM-UQ
-      |____FPKM-UQ.exp
-      |____FPKM-UQ_boxplot.pdf
-      |____FPKM-UQ_clinical_info.txt
-      |____FPKM-UQ_samples.txt
+    |____Counts
+      |____Counts.exp
+      |____Counts_boxplot.pdf
+      |____Counts_clinical_info.txt
+      |____Counts_samples.txt
       |____gdc-client
       |____gdc-client_v1.1.0_OSX_x64.zip
       |____gdc_manifest.txt
@@ -88,9 +88,9 @@ TCGA
 
 File | Description
 ------------ | ------------
-FPKM-UQ.exp | FPKM normalised gene expression matrix
-FPKM-UQ_boxplot.pdf | Box plot of normalised log2 expression data per sample
-FPKM-UQ_clinical_info.txt | Samples and associated clinical annotation
+Counts.exp | Read count data matrix
+Counts_boxplot.pdf | Box plot of read counts per sample
+Counts_clinical_info.txt | Samples and associated clinical annotation
 R_parameters.txt | User-defined parameters used for the script execution
 Gene_Expression_Quantification | Folder with compressed 'txt' files containing expression values for each sample
 Clinical_Supplement | Folder with 'xml' files including clinical information for each sample
