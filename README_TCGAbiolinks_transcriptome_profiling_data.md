@@ -107,86 +107,86 @@ Local workspace. This is the directory to which the data will be downloaded and 
 
 Available TCGA/TARGET project IDs are:
 
-      Project ID | Name
-      ------------ | ------------
-      TCGA-SARC | Sarcoma
-      TCGA-MESO | Mesothelioma
-      TCGA-READ | Rectum Adenocarcinoma
-      TCGA-KIRP | Kidney Renal Papillary Cell Carcinoma
-      TARGET-NBL | Neuroblastoma
-      TCGA-PAAD  | Pancreatic Adenocarcinoma
-      TCGA-GBM   | Glioblastoma Multiforme
-      TCGA-ACC   | Adrenocortical Carcinoma
-      TARGET-OS  | Osteosarcoma
-      TCGA-CESC  | Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma
-      TARGET-RT  | Rhabdoid Tumour
-      TCGA-BRCA  | Breast Invasive Carcinoma
-      TCGA-ESCA  | Esophageal Carcinoma
-      TCGA-DLBC  | Lymphoid Neoplasm Diffuse Large B-cell Lymphoma
-      TCGA-KICH  | Kidney Chromophobe
-      TCGA-KIRC  | Kidney Renal Clear Cell Carcinoma
-      TCGA-UVM   | Uveal Melanoma
-      TARGET-AML | Acute Myeloid Leukaemia
-      TCGA-LAML  | Acute Myeloid Leukaemia
-      TCGA-SKCM  | Skin Cutaneous Melanoma
-      TCGA-PCPG  | Pheochromocytoma and Paraganglioma
-      TCGA-COAD  | Colon Adenocarcinoma
-      TCGA-UCS   | Uterine Carcinosarcoma
-      TCGA-LUSC  | Lung Squamous Cell Carcinoma
-      TCGA-LGG   | Brain Lower Grade Glioma
-      TCGA-HNSC  | Head and Neck Squamous Cell Carcinoma
-      TCGA-TGCT  | Testicular Germ Cell Tumours
-      TARGET-CCSK  | Clear Cell Sarcoma of the Kidney
-      TCGA-THCA  | Thyroid Carcinoma
-      TCGA-LIHC  | Liver Hepatocellular Carcinoma
-      TCGA-BLCA  | Bladder Urothelial Carcinoma
-      TCGA-UCEC  | Uterine Corpus Endometrial Carcinoma
-      TARGET-WT  | High-Risk Wilms Tumour
-      TCGA-PRAD  | Prostate Adenocarcinoma
-      TCGA-OV    | Ovarian Serous Cystadenocarcinoma
-      TCGA-THYM  | Thymoma
-      TCGA-CHOL  | Cholangiocarcinoma
-      TCGA-STAD  | Stomach Adenocarcinoma
-      TCGA-LUAD  | Lung Adenocarcinoma
+Project ID | Name
+------------ | ------------
+TCGA-SARC | Sarcoma
+TCGA-MESO | Mesothelioma
+TCGA-READ | Rectum Adenocarcinoma
+TCGA-KIRP | Kidney Renal Papillary Cell Carcinoma
+TARGET-NBL | Neuroblastoma
+TCGA-PAAD  | Pancreatic Adenocarcinoma
+TCGA-GBM   | Glioblastoma Multiforme
+TCGA-ACC   | Adrenocortical Carcinoma
+TARGET-OS  | Osteosarcoma
+TCGA-CESC  | Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma
+TARGET-RT  | Rhabdoid Tumour
+TCGA-BRCA  | Breast Invasive Carcinoma
+TCGA-ESCA  | Esophageal Carcinoma
+TCGA-DLBC  | Lymphoid Neoplasm Diffuse Large B-cell Lymphoma
+TCGA-KICH  | Kidney Chromophobe
+TCGA-KIRC  | Kidney Renal Clear Cell Carcinoma
+TCGA-UVM   | Uveal Melanoma
+TARGET-AML | Acute Myeloid Leukaemia
+TCGA-LAML  | Acute Myeloid Leukaemia
+TCGA-SKCM  | Skin Cutaneous Melanoma
+TCGA-PCPG  | Pheochromocytoma and Paraganglioma
+TCGA-COAD  | Colon Adenocarcinoma
+TCGA-UCS   | Uterine Carcinosarcoma
+TCGA-LUSC  | Lung Squamous Cell Carcinoma
+TCGA-LGG   | Brain Lower Grade Glioma
+TCGA-HNSC  | Head and Neck Squamous Cell Carcinoma
+TCGA-TGCT  | Testicular Germ Cell Tumours
+TARGET-CCSK  | Clear Cell Sarcoma of the Kidney
+TCGA-THCA  | Thyroid Carcinoma
+TCGA-LIHC  | Liver Hepatocellular Carcinoma
+TCGA-BLCA  | Bladder Urothelial Carcinoma
+TCGA-UCEC  | Uterine Corpus Endometrial Carcinoma
+TARGET-WT  | High-Risk Wilms Tumour
+TCGA-PRAD  | Prostate Adenocarcinoma
+TCGA-OV    | Ovarian Serous Cystadenocarcinoma
+TCGA-THYM  | Thymoma
+TCGA-CHOL  | Cholangiocarcinoma
+TCGA-STAD  | Stomach Adenocarcinoma
+TCGA-LUAD  | Lung Adenocarcinoma
 <br />
 
 ### --tissue
 
 Multiple tissue types are allowed. Each tissue type is expected to be separated by comma. Type '*all*' for all listed tissue types to be considered for download. Available options are:
 
-      Tissue code | Letter code | Definition
-      ------------ | ------------ | ------------
-      1 | TP  | Primary solid Tumour
-      2 | TR  | Recurrent Solid Tumour
-      3 | TB  | Primary Blood Derived Cancer - Peripheral Blood
-      4 | TRBM | Recurrent Blood Derived Cancer - Bone Marrow
-      5 | TAP | Additional - New Primary
-      6 | TM | Metastatic
-      7 | TAM | Additional Metastatic
-      8 | THOC | Human Tumour Original Cells
-      9 | TBM | Primary Blood Derived Cancer - Bone Marrow
-      10 | NB | Blood Derived Normal
-      11 | NT | Solid Tissue Normal
-      12 | NBC | Buccal Cell Normal
-      13 | NEBV | EBV Immortalised Normal
-      14 | NBM | Bone Marrow Normal
-      20 | CELLC | Control Analyte
-      40 | TRB | Recurrent Blood Derived Cancer - Peripheral Blood
-      50 | CELL | Cell Lines
-      60 | XP | Primary Xenograft Tissue
-      61 | XCL | Cell Line Derived Xenograft Tissue
-      All | --- | All available tissue types
+Tissue code | Letter code | Definition
+------------ | ------------ | ------------
+1 | TP  | Primary solid Tumour
+2 | TR  | Recurrent Solid Tumour
+3 | TB  | Primary Blood Derived Cancer - Peripheral Blood
+4 | TRBM | Recurrent Blood Derived Cancer - Bone Marrow
+5 | TAP | Additional - New Primary
+6 | TM | Metastatic
+7 | TAM | Additional Metastatic
+8 | THOC | Human Tumour Original Cells
+9 | TBM | Primary Blood Derived Cancer - Bone Marrow
+10 | NB | Blood Derived Normal
+11 | NT | Solid Tissue Normal
+12 | NBC | Buccal Cell Normal
+13 | NEBV | EBV Immortalised Normal
+14 | NBM | Bone Marrow Normal
+20 | CELLC | Control Analyte
+40 | TRB | Recurrent Blood Derived Cancer - Peripheral Blood
+50 | CELL | Cell Lines
+60 | XP | Primary Xenograft Tissue
+61 | XCL | Cell Line Derived Xenograft Tissue
+All | --- | All available tissue types
 <br />
 
 ### --workflow
 
 Data from three [workflows](https://gdc-docs.nci.nih.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline) are available:
 
-      Workflow | Definition
-      ------------ | ------------
-      Counts | Raw Read Counts - the number of reads aligned to each protein-coding gene, calculated by *HT-Seq* (**default**)
-      FPKM | Normalised expression value that takes into account each protein-coding gene length and the number of reads mappable to all protein-coding genes
-      FPKM-UQ | Normalised raw read count in which gene expression values, in FPKM, are divided by the 75th percentile value
+Workflow | Definition
+------------ | ------------
+Counts | Raw Read Counts - the number of reads aligned to each protein-coding gene, calculated by *HT-Seq* (**default**)
+FPKM | Normalised expression value that takes into account each protein-coding gene length and the number of reads mappable to all protein-coding genes
+FPKM-UQ | Normalised raw read count in which gene expression values, in FPKM, are divided by the 75th percentile value
 <br />
 
 ## Note
