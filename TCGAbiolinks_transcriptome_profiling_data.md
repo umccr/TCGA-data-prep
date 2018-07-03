@@ -36,7 +36,7 @@ Argument | Short | Description
 
 ## Example of use
 
-Use the [TCGAbiolinks_transcriptome_profiling_data.R](https://github.com/umccr/TCGA-data-prep/blob/master/TCGAbiolinks_transcriptome_profiling_data.R) script to download FPKM normalised gene expression matrix for pancreatic cancer (PAAD) project.
+Use the [TCGAbiolinks_transcriptome_profiling_data.R](https://github.com/umccr/TCGA-data-prep/blob/master/TCGAbiolinks_transcriptome_profiling_data.R) script to download read count matrix for pancreatic cancer (PAAD) project.
 
 ### Command line
 
