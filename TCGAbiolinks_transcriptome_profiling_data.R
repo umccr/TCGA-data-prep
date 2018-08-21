@@ -260,7 +260,7 @@ if (file.exists(OutDir)){
 setwd(OutDir)
 
 ##### Write used parameters into a file
-write(unlist(opt)[1:length(opt)-1], file = "R_parameters.txt", append = FALSE, sep="\t")
+write(unlist(opt)[1:length(opt)-1], file = "R_parameters.txt", quote=FALSE, append = FALSE, sep="\t")
 
 
 #===============================================================================
@@ -296,7 +296,7 @@ if ( workflowType == "HTSeq - Counts" ) {
     data_matrix <- assays(data)$'HTSeq - Counts'
 
     cat( paste( "Writing read count data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", row.names=FALSE )
+    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
     ##### Box plot of read count data per sample
     pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
@@ -313,7 +313,7 @@ if ( workflowType == "HTSeq - Counts" ) {
     data_matrix <- log2(data_matrix)
 
     cat( paste( "Writing FPKM normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", row.names=FALSE )
+    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", quote=FALSE, row.names=FALSE )
 
     ##### Box plot of normalised log2 expression data per sample
     pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
@@ -330,7 +330,7 @@ if ( workflowType == "HTSeq - Counts" ) {
     data_matrix <- log2(data_matrix)
 
     cat( paste( "Writing FPKM-UQ normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", row.names=FALSE )
+    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
     ##### Box plot of normalised log2 expression data per sample
     pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
@@ -344,7 +344,7 @@ if ( workflowType == "HTSeq - Counts" ) {
 samples_info <- colData(data)
 
 cat( paste( "Writing samples information [", paste(ProjectName, "_samples.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep="") ,sep="\t", row.names=FALSE )
+write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
 
 #===============================================================================
@@ -393,7 +393,7 @@ for (i in 1:nrow( samples_info ) ) {
 
 
 cat( paste( "Writing samples and clinical information [", paste(ProjectName, "_clinical_info.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-write.table( clinical.merged, file = paste(ProjectName, "_clinical_info.txt", sep="") ,sep="\t", row.names=FALSE )
+write.table( clinical.merged, file = paste(ProjectName, "_clinical_info.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
 
 ##### Clear workspace
