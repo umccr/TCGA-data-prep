@@ -260,7 +260,7 @@ if (file.exists(OutDir)){
 setwd(OutDir)
 
 ##### Write used parameters into a file
-write(unlist(opt)[1:length(opt)-1], file = "R_parameters.txt", quote=FALSE, append = FALSE, sep="\t")
+write(unlist(opt)[1:length(opt)-1], file = "R_parameters.txt", append = FALSE, sep="\t")
 
 
 #===============================================================================
