@@ -343,6 +343,9 @@ if ( workflowType == "HTSeq - Counts" ) {
 ##### Extract samples information
 samples_info <- colData(data)
 
+##### Remove "treatments" element, which is a list and cannot be used as data frame
+samples_info <- as.data.frame(samples_info[, -which(names(samples_info) %in% "treatments") ])
+
 cat( paste( "Writing samples information [", paste(ProjectName, "_samples.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
 write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
@@ -363,13 +366,9 @@ GDCdownload(query, method = "client")
 #===============================================================================
 
 clinical.patient <- GDCprepare_clinic(query, clinical.info = "patient")
-rownames(clinical.patient) <- clinical.patient$bcr_patient_barcode
-
 
 ##### Create empty data frame for sample and clinical info
-clinical.merged <- as.data.frame( setNames(replicate( sum(ncol(samples_info), ncol(clinical.patient) ), numeric(0), simplify = F), c(colnames(samples_info), colnames(clinical.patient))) )
-clinical.present <- 0
-
+clinical.merged <- NULL
 
 ##### Merge sample with clinical information
 for (i in 1:nrow( samples_info ) ) {
@@ -379,21 +378,13 @@ for (i in 1:nrow( samples_info ) ) {
     clinical.2add[1,] <- rep("", ncol(clinical.patient))
 
     ##### Scan the clincial information for each sample
-    for (j in 1:nrow( clinical.patient ) ) {
+    clinical.2add <- clinical.patient[ match(samples_info$patient[i], clinical.patient$bcr_patient_barcode), ]
 
-        ##### Merge sample with clincial information if available for corresponding sample
-        if ( samples_info$patient[i] == rownames(clinical.patient)[j] ) {
-
-            clinical.2add <- clinical.patient[j,]
-        }
-    }
     clinical.merged <- rbind( clinical.merged, cbind( samples_info[i,], clinical.2add) )
 }
 
-
-
 cat( paste( "Writing samples and clinical information [", paste(ProjectName, "_clinical_info.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-write.table( clinical.merged, file = paste(ProjectName, "_clinical_info.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
+write.table( clinical.merged, file = paste(ProjectName, "_clinical_info.txt", sep=""), quote=FALSE, sep="\t", row.names=FALSE )
 
 
 ##### Clear workspace
