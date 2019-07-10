@@ -27,7 +27,7 @@ The TCGA genomic data harmonization is [here](https://gdc.cancer.gov/about-data/
 
 ## Installation
 
-Installation the **stable version** of [TCGAbiolinks](http://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html) from [Bioconductor](http://bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html)
+* **Stable version** of [TCGAbiolinks](http://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html) R package from [Bioconductor](http://bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html)
 
 ```
 if (!requireNamespace("BiocManager", quietly=TRUE))
@@ -35,13 +35,13 @@ if (!requireNamespace("BiocManager", quietly=TRUE))
 BiocManager::install("TCGAbiolinks")
 ```
 
-NOTE, in case of any issues with the stable version, one can try using the **development version** from [GitHub](https://github.com/BioinformaticsFMRP/TCGAbiolinks)
+* NOTE, in case of any issues with the stable version, one can try using the **development version** from [GitHub](https://github.com/BioinformaticsFMRP/TCGAbiolinks)
 
 ```
 devtools::install_github('BioinformaticsFMRP/TCGAbiolinks')
 ```
 
-For instance, that may be the case when [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) is updated and significant changes are introduced to *Ensembl BioMart* database (see [this GitHub post](https://github.com/BioinformaticsFMRP/TCGAbiolinks/issues/250)).
+>For instance, that may be the case when [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) is updated and significant changes are introduced to *Ensembl BioMart* database (see [this GitHub post](https://github.com/BioinformaticsFMRP/TCGAbiolinks/issues/250)).
 
 
 ## Arguments
