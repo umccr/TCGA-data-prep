@@ -15,7 +15,7 @@ The TCGA genomic data harmonization is [here](https://gdc.cancer.gov/about-data/
   * [Command line](#command-line)
   * [Output data directory structure](#output-data-directory-structure)
   * [Files description](#files-description)
-* [Arguments options](#arguments-options)
+* [Arguments description](#arguments-description)
   * [--out_dir](#--out_dir)
   * [--project_id](#--project_id)
   * [--tissue](#--tissue)
@@ -42,6 +42,8 @@ devtools::install_github('BioinformaticsFMRP/TCGAbiolinks')
 ```
 
 >For instance, that may be the case when [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) is updated and significant changes are introduced to *Ensembl BioMart* database (see [this GitHub post](https://github.com/BioinformaticsFMRP/TCGAbiolinks/issues/250)).
+
+* Make sure that R version >= 3.3 is installed. For older versions the *TCGAbiolinks* uses different functions starting with "TCGA" rather than "GDC" since the data were moved from DCC server to NCI Genomic Data Commons (GDC).
 
 
 ## Arguments
@@ -117,7 +119,7 @@ Clinical_Supplement | Folder with 'xml' files including clinical information for
 <br />
 
 
-## Arguments options
+## Arguments description
 
 ### --out_dir
 
@@ -211,10 +213,3 @@ FPKM | Normalised expression value that takes into account each protein-coding g
 FPKM-UQ | Normalised raw read count in which gene expression values, in FPKM, are divided by the 75th percentile value
 <br />
 
-## Note
-Make sure that R version >= 3.3 is installed. For older versions the *TCGAbiolinks* uses different functions starting with "TCGA" rather than "GDC" since the data were moved from DCC server to NCI Genomic Data Commons (GDC).
-Make sure that the [newest *TCGAbiolinks* package](https://github.com/BioinformaticsFMRP/TCGAbiolinks) package is installed.
-
-```
-devtools::install_github(repo = "BioinformaticsFMRP/TCGAbiolinks")
-```
