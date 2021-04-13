@@ -3,6 +3,11 @@
 Pipeline for downloading HARMONIZED transcriptome profiling data from [TCGA](https://cancergenome.nih.gov) and [TARGET](https://ocg.cancer.gov/programs/target/research) projects using *[TCGAbiolinks](https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html)* R package. It uses the [GDC Data Transfer Tool Client](https://gdc.cancer.gov/access-data/gdc-data-transfer-tool) to download the data from the [Genomic Data Commons](https://gdc.cancer.gov/about-gdc) (GDC) portal. The script outputs normalised expression (FPKM or FPKM-UQ) or raw count matrix for RNA-seq data for user-defined tissue types along with associated clinical information.
 
 The TCGA genomic data harmonization is [here](https://gdc.cancer.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization-0#Overview) and the mRNA analysis pipeline is described [here](https://gdc-docs.nci.nih.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline).
+
+###### Note
+
+Genome of reference `hg38` is used as default.
+
 <br />
 <br />
 
@@ -113,6 +118,7 @@ File | Description
 Counts.exp | Read count data matrix
 Counts_boxplot.pdf | Box plot of read counts per sample
 Counts_clinical_info.txt | Samples and associated clinical annotation
+Counts_samples.txt | Combined samples annotation and associated clinical information
 R_parameters.txt | User-defined parameters used for the script execution
 Gene_Expression_Quantification | Folder with compressed 'txt' files containing expression values for each sample
 Clinical_Supplement | Folder with 'xml' files including clinical information for each sample
@@ -180,15 +186,15 @@ Multiple tissue types are allowed. Each tissue type is expected to be separated 
 
 Tissue code | Letter code | Definition
 ------------ | ------------ | ------------
-1 | TP  | Primary solid Tumour
-2 | TR  | Recurrent Solid Tumour
-3 | TB  | Primary Blood Derived Cancer - Peripheral Blood
-4 | TRBM | Recurrent Blood Derived Cancer - Bone Marrow
-5 | TAP | Additional - New Primary
-6 | TM | Metastatic
-7 | TAM | Additional Metastatic
-8 | THOC | Human Tumour Original Cells
-9 | TBM | Primary Blood Derived Cancer - Bone Marrow
+01 | TP  | Primary solid Tumour
+02 | TR  | Recurrent Solid Tumour
+03 | TB  | Primary Blood Derived Cancer - Peripheral Blood
+04 | TRBM | Recurrent Blood Derived Cancer - Bone Marrow
+05 | TAP | Additional - New Primary
+06 | TM | Metastatic
+07 | TAM | Additional Metastatic
+08 | THOC | Human Tumour Original Cells
+09 | TBM | Primary Blood Derived Cancer - Bone Marrow
 10 | NB | Blood Derived Normal
 11 | NT | Solid Tissue Normal
 12 | NBC | Buccal Cell Normal
