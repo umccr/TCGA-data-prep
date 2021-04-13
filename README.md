@@ -10,3 +10,7 @@ pipeline for processing LEGACY gene expression data
 
 - [TCGAbiolinks_DNA_methylation_data](TCGAbiolinks_DNA_methylation_data.md)
 pipeline for processing HARMONIZED DNA methylation data
+
+<br />
+
+The [TCGAbiolinks](http://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html) package accesses the [National Cancer Institute](https://www.cancer.gov/) (NCI) [GDC](https://gdc.cancer.gov/about-data/publications/pancanatlas) thorough its [GDC Application Programming Interface](https://gdc.cancer.gov/developers/gdc-application-programming-interface-api) (API) to download the most recent data files.
