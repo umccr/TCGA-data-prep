@@ -12,7 +12,7 @@
 
 ################################################################################
 #
-#   Description: Pipeline for downloading HARMONIZED transcriptome profiling DATA from TCGA ( https://cancergenome.nih.gov/ ) and TARGET ( https://ocg.cancer.gov/programs/target/research ) projects using TCGAbiolinks package ( https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/index.html ). The script outputs normalised expression (FPKM or FPKM-UQ) or raw count (calculated by HT-Seq) matrix for RNA-seq data for user-defined tissue types along with associated clinical information. The TCGA genomic data harmonization is here: https://gdc.cancer.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization-0#Overview ; and the mRNA analysis pipeline is described here: https://gdc-docs.nci.nih.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline/
+#   Description: Pipeline for downloading HARMONIZED transcriptome profiling DATA from TCGA ( https://cancergenome.nih.gov/ ) and TARGET ( https://ocg.cancer.gov/programs/target/research ) projects using TCGAbiolinks package ( https://bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/download_prepare.html ). The script outputs raw count (calculated by STAR) matrix for RNA-seq data for user-defined tissue types along with associated clinical information. The TCGA genomic data harmonization is here: https://gdc.cancer.gov/about-data/data-harmonization-and-generation/genomic-data-harmonization-0#Overview ; and the mRNA analysis pipeline is described here: https://docs.gdc.cancer.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline/
 #
 #   Note: Make sure that R version >= 3.3 is installed. For older versions the TCGAbiolinks uses different functions starting with "TCGA" rather than "GDC" since the data were moved from DCC server to NCI Genomic Data Commons (GDC).
 #   Make sure that the newest TCGAbiolinks package is installed ( https://github.com/BioinformaticsFMRP/TCGAbiolinks )
@@ -74,15 +74,15 @@
 #               Tissue   (Letter    (Definition)
 #               code      code)
 #
-#               1        (TP)       (Primary solid Tumor)
-#               2        (TR)       (Recurrent Solid Tumor)
-#               3        (TB)       (Primary Blood Derived Cancer - Peripheral Blood)
-#               4        (TRBM)     (Recurrent Blood Derived Cancer - Bone Marrow)
-#               5        (TAP)      (Additional - New Primary)
-#               6        (TM)       (Metastatic)
-#               7        (TAM)      (Additional Metastatic)
-#               8        (THOC)     (Human Tumor Original Cells)
-#               9        (TBM)      (Primary Blood Derived Cancer - Bone Marrow)
+#               01       (TP)       (Primary Tumor)
+#               02       (TR)       (Recurrent Tumor)
+#               03       (TB)       (Primary Blood Derived Cancer - Peripheral Blood)
+#               04       (TRBM)     (Recurrent Blood Derived Cancer - Bone Marrow)
+#               05       (TAP)      (Additional - New Primary)
+#               06       (TM)       (Metastatic)
+#               07       (TAM)      (Additional Metastatic)
+#               08       (THOC)     (Human Tumor Original Cells)
+#               09       (TBM)      (Primary Blood Derived Cancer - Bone Marrow)
 #               10       (NB)       (Blood Derived Normal)
 #               11       (NT)       (Solid Tissue Normal)
 #               12       (NBC)      (Buccal Cell Normal)
@@ -96,17 +96,17 @@
 #               All       ---       (All available tissue types)
 #
 #
-#============> [4] Workflow type. Data from three workflows are available ( https://gdc-docs.nci.nih.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline/ ):
+#============> [4] Data types. Four data types are available:
 #
-#               Workflow  (Definition)
+#               Data type (Definition)
 #
-#               Counts    (Raw Read Counts - the number of reads aligned to each protein-coding gene, calculated by HT-Seq; used as DEFAULT)
+#               Counts    (Raw Read Counts - the number of reads aligned to each protein-coding gene, calculated by STAR; used as DEFAULT)
+#               TPM       (Normalized expression value that takes into account differences in library size and each protein-coding gene length)
 #               FPKM      (Normalized expression value that takes into account each protein-coding gene length and the number of reads mappable to all protein-coding genes)
 #               FPKM-UQ   (Normalized raw read count in which gene expression values, in FPKM, are divided by the 75th percentile value)
 #
 #
-#
-#   Command line use example: Rscript TCGAbiolinks_transcriptome_profiling_data.R --out_dir TCGA/PAAD --project_id TCGA-PAAD --tissue 1,11 --workflow FPKM-UQ
+#   Command line use example: Rscript TCGAbiolinks_transcriptome_profiling_data.R --out_dir TCGA/PAAD --project_id TCGA-PAAD --tissue 1,11 --workflow Counts
 #
 #
 ################################################################################
@@ -173,29 +173,34 @@ if ( Tissue == "All" || Tissue == "all" ) {
 ##### Define if normalised or raw count data are queried
 if ( !is.na(opt$workflow) ) {
 
-    #print(paste(opt$workflow, sep=".       "))
-
     if ( opt$workflow == "counts" || opt$workflow == "Counts" ) {
 
-        workflowType <- "HTSeq - Counts"
+        workflowType <- "STAR - Counts"
 
         ##### Make the results directory more specific
         OutDir <- paste(OutDir, "transcriptome_profiling/Counts", sep="/" )
 
-    } else if ( opt$workflow == "FPKM" ) {
-
-        workflowType <- "HTSeq - FPKM"
-
-        ##### Make the results directory more specific
-        OutDir <- paste(OutDir, "transcriptome_profiling/FPKM", sep="/" )
-
-    } else if ( opt$workflow == "FPKM-UQ" ) {
-
-        workflowType <- "HTSeq - FPKM-UQ"
-
-        ##### Make the results directory more specific
-        OutDir <- paste(OutDir, "transcriptome_profiling/FPKM-UQ", sep="/" )
-
+    } else if ( opt$workflow == "tpm" || opt$workflow == "TPM" ) {
+      
+      workflowType <- "STAR - Counts"
+      
+      ##### Make the results directory more specific
+      OutDir <- paste(OutDir, "transcriptome_profiling/TPM", sep="/" )
+      
+    } else if ( opt$workflow == "fpkm" || opt$workflow == "FPKM" ) {
+      
+      workflowType <- "STAR - Counts"
+      
+      ##### Make the results directory more specific
+      OutDir <- paste(OutDir, "transcriptome_profiling/FPKM", sep="/" )
+      
+    } else if ( opt$workflow == "fpkm-uq" || opt$workflow == "FPKM-UQ" ) {
+      
+      workflowType <- "STAR - Counts"
+      
+      ##### Make the results directory more specific
+      OutDir <- paste(OutDir, "transcriptome_profiling/FPKM-UQ", sep="/" )
+      
     } else {
 
         cat( paste("The file type", opt$workflow, "is not supported\n", sep=" ") )
@@ -205,7 +210,7 @@ if ( !is.na(opt$workflow) ) {
 ##### Default value (Counts)
 } else {
 
-    workflowType <- "HTSeq - Counts"
+    workflowType <- "STAR - Counts"
 
     ##### Make the results directory more specific
     OutDir <- paste(OutDir, "transcriptome_profiling/Counts", sep="/" )
@@ -220,7 +225,7 @@ ProjectName <-  ProjectName[length(ProjectName)]
 ProjectIDs <- c("TCGA-SARC","TCGA-MESO","TCGA-READ","TCGA-KIRP","TARGET-NBL","TCGA-PAAD","TCGA-GBM","TCGA-ACC","TARGET-OS","TCGA-CESC","TARGET-RT","TCGA-BRCA","TCGA-ESCA","TCGA-DLBC","TCGA-KICH","TCGA-KIRC","TCGA-UVM","TARGET-AML","TCGA-LAML","TCGA-SKCM","TCGA-PCPG","TCGA-COAD","TCGA-UCS","TCGA-LUSC","TCGA-LGG","TCGA-HNSC","TCGA-TGCT","TARGET-CCSK","TCGA-THCA","TCGA-LIHC","TCGA-BLCA","TCGA-UCEC","TARGET-WT","TCGA-PRAD","TCGA-OV","TCGA-THYM","TCGA-CHOL","TCGA-STAD","TCGA-LUAD")
 
 ##### Store available tissue type codes and definitions in a list
-Tissues <- as.list(setNames( c("Primary solid Tumor","Recurrent Solid Tumor","Primary Blood Derived Cancer - Peripheral Blood","Recurrent Blood Derived Cancer - Bone Marrow","Additional - New Primary","Metastatic","Additional Metastatic","Human Tumor Original Cells","Primary Blood Derived Cancer - Bone Marrow","Blood Derived Normal","Solid Tissue Normal","Buccal Cell Normal","EBV Immortalized Normal","Bone Marrow Normal","Control Analyte","Recurrent Blood Derived Cancer - Peripheral Blood","Cell Lines","Primary Xenograft Tissue","Cell Line Derived Xenograft Tissue"), c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,20,40,50,60,61)) )
+Tissues <- as.list(setNames( c("Primary Tumor","Recurrent Tumor","Primary Blood Derived Cancer - Peripheral Blood","Recurrent Blood Derived Cancer - Bone Marrow","Additional - New Primary","Metastatic","Additional Metastatic","Human Tumor Original Cells","Primary Blood Derived Cancer - Bone Marrow","Blood Derived Normal","Solid Tissue Normal","Buccal Cell Normal","EBV Immortalized Normal","Bone Marrow Normal","Control Analyte","Recurrent Blood Derived Cancer - Peripheral Blood","Cell Lines","Primary Xenograft Tissue","Cell Line Derived Xenograft Tissue"), c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,20,40,50,60,61)) )
 
 
 ##### Define the sample types
@@ -271,9 +276,8 @@ write(unlist(opt)[1:length(opt)-1], file = "R_parameters.txt", append = FALSE, s
 query <- GDCquery( project = ProjectID, data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = workflowType, sample.type = sampleType )
 
 
-##### Download queried data. Use “client” method. Although the default "api" method is faster, but the data might get corrupted in the download, and it might need to be executed again. One can also set the "chunks.per.download" parameter. This will make the API method only download n files at a time. This may reduce the download problems when the data size is too large.
-GDCdownload(query, method = "client")
-
+##### The default download method "api" is faster then "client", but the data might get corrupted in the download, and it might need to be executed again. One can also set the "chunks.per.download" parameter. This will make the API method only download n files at a time. This may reduce the download problems when the data size is too large.
+GDCdownload(query, method = "api")
 
 #===============================================================================
 #    Data prepare
@@ -291,9 +295,9 @@ data <- GDCprepare(query)
 
 
 ##### Extract gene expression matrix
-if ( workflowType == "HTSeq - Counts" ) {
+if ( opt$workflow == "counts" || opt$workflow == "Counts" ) {
 
-    data_matrix <- assays(data)$'HTSeq - Counts'
+    data_matrix <- assay(data)
 
     cat( paste( "Writing read count data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
     write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
@@ -303,27 +307,61 @@ if ( workflowType == "HTSeq - Counts" ) {
     par(mar=c(16,5,2,1))
     boxplot( data_matrix, col="grey", las = 2, main = paste(ProjectName, " data", sep="") )
     dev.off()
-
-} else if ( workflowType == "HTSeq - FPKM" ) {
-
-    data_matrix <- assays(data)$'HTSeq - FPKM'
-
-    ##### Deal with 0s before log2 transformation. Add 1 to all values
-    data_matrix <- data_matrix + 1
-    data_matrix <- log2(data_matrix)
-
-    cat( paste( "Writing FPKM normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-    write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", quote=FALSE, row.names=FALSE )
-
-    ##### Box plot of normalised log2 expression data per sample
-    pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
-    par(mar=c(16,5,2,1))
-    boxplot( data_matrix,col="grey", las = 2, main = paste(ProjectName, " normalized expression data", sep="") )
-    dev.off()
-
+    
+} else if ( opt$workflow == "tpm" || opt$workflow == "TPM" ) {
+  
+  data_matrix <- assays(data)$'tpm_unstrand'
+  
+  ##### Deal with 0s before log2 transformation. Add 1 to all values
+  data_matrix <- data_matrix + 1
+  data_matrix <- log2(data_matrix)
+  
+  cat( paste( "Writing FPKM normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
+  write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", quote=FALSE, row.names=FALSE )
+  
+  ##### Box plot of normalised log2 expression data per sample
+  pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
+  par(mar=c(16,5,2,1))
+  boxplot( data_matrix,col="grey", las = 2, main = paste(ProjectName, " normalized expression data", sep="") )
+  dev.off()
+  
+} else if ( opt$workflow == "fpkm" || opt$workflow == "FPKM" ) {
+  
+  data_matrix <- assays(data)$'fpkm_unstrand'
+  
+  ##### Deal with 0s before log2 transformation. Add 1 to all values
+  data_matrix <- data_matrix + 1
+  data_matrix <- log2(data_matrix)
+  
+  cat( paste( "Writing FPKM normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
+  write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", quote=FALSE, row.names=FALSE )
+  
+  ##### Box plot of normalised log2 expression data per sample
+  pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
+  par(mar=c(16,5,2,1))
+  boxplot( data_matrix,col="grey", las = 2, main = paste(ProjectName, " normalized expression data", sep="") )
+  dev.off()
+  
+} else if ( opt$workflow == "fpkm-uq" || opt$workflow == "FPKM-UQ" ) {
+  
+  data_matrix <- assays(data)$'fpkm_uq_unstrand'
+  
+  ##### Deal with 0s before log2 transformation. Add 1 to all values
+  data_matrix <- data_matrix + 1
+  data_matrix <- log2(data_matrix)
+  
+  cat( paste( "Writing FPKM normalised expression data [", paste(ProjectName, ".exp", sep=""), "] to [", OutDir, "]\n", sep=" ") )
+  write.table( prepare2write(data_matrix), file = paste(ProjectName, ".exp", sep="") ,sep="\t", quote=FALSE, row.names=FALSE )
+  
+  ##### Box plot of normalised log2 expression data per sample
+  pdf(paste(ProjectName, "_boxplot.pdf", sep=""), pointsize = 8 ,width = 0.1*ncol(data_matrix), height = 4)
+  par(mar=c(16,5,2,1))
+  boxplot( data_matrix,col="grey", las = 2, main = paste(ProjectName, " normalized expression data", sep="") )
+  dev.off()
+  
 } else {
 
-    data_matrix <- assays(data)$'HTSeq - FPKM-UQ'
+    data_matrix <- assays(data)
 
     ##### Deal with 0s before log2 transformation. Add 1 to all values
     data_matrix <- data_matrix + 1
@@ -347,7 +385,7 @@ samples_info <- colData(data)
 samples_info <- as.data.frame(samples_info[, -which(names(samples_info) %in% "treatments") ])
 
 cat( paste( "Writing samples information [", paste(ProjectName, "_samples.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
+write.table( as.matrix(samples_info), file = paste(ProjectName, "_samples.txt", sep=""), quote=FALSE ,sep="\t", row.names=FALSE )
 
 
 #===============================================================================
@@ -355,11 +393,10 @@ write.table( samples_info, file = paste(ProjectName, "_samples.txt", sep=""), qu
 #===============================================================================
 
 ##### Query clinical data
-query <- GDCquery( project = ProjectID, data.category = "Clinical", file.type = "xml" )
+query <- GDCquery( project = ProjectID, data.category = "Clinical", data.format = "bcr xml" )
 
-##### Download queried data. Use “client” method. Although the default "api" method is faster, but the data might get corrupted in the download, and it might need to be executed again. One can also set the "chunks.per.download" parameter. This will make the API method only download n files at a time. This may reduce the download problems when the data size is too large.
-GDCdownload(query, method = "client")
-
+##### The default download method "api" is faster then "client", but the data might get corrupted in the download, and it might need to be executed again. One can also set the "chunks.per.download" parameter. This will make the API method only download n files at a time. This may reduce the download problems when the data size is too large.
+GDCdownload(query, method = "api")
 
 #===============================================================================
 #    Data prepare associated clinical information
@@ -384,7 +421,7 @@ for (i in 1:nrow( samples_info ) ) {
 }
 
 cat( paste( "Writing samples and clinical information [", paste(ProjectName, "_clinical_info.txt", sep=""), "] to [", OutDir, "]\n", sep=" ") )
-write.table( clinical.merged, file = paste(ProjectName, "_clinical_info.txt", sep=""), quote=FALSE, sep="\t", row.names=FALSE )
+write.table( as.matrix(clinical.merged), file = paste(ProjectName, "_clinical_info.txt", sep=""), quote=FALSE, sep="\t", row.names=FALSE )
 
 
 ##### Clear workspace
